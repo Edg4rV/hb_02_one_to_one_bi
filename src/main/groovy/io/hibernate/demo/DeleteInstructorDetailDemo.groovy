@@ -1,13 +1,12 @@
 package io.hibernate.demo
 
 import io.hibernate.config.HibernateConfig
-import io.hibernate.entity.Instructor
 import io.hibernate.entity.InstructorDetail
 import org.hibernate.Session
 import org.hibernate.SessionFactory
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
-class GetInstructorDetailDemo {
+class DeleteInstructorDetailDemo {
     static void main(String[] args) {
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(HibernateConfig.class);
@@ -21,7 +20,7 @@ class GetInstructorDetailDemo {
 
             session.beginTransaction()
 
-            int theId = 299
+            int theId = 3
 
             InstructorDetail tempInstructorDetail =
                     session.get(InstructorDetail.class, theId)
@@ -29,6 +28,12 @@ class GetInstructorDetailDemo {
             println "tempInstructorDetail: ${tempInstructorDetail}"
 
             println "the associated instructor: ${tempInstructorDetail?.getInstructor()}"
+
+            println "Deleting tempInstructorDetail: ${tempInstructorDetail}"
+
+            tempInstructorDetail.getInstructor().setInstructorDetail(null)
+
+            session.delete(tempInstructorDetail)
 
             session.getTransaction().commit()
 
